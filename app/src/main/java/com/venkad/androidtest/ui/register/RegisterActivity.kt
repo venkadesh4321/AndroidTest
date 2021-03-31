@@ -12,6 +12,7 @@ import com.venkad.androidtest.R
 import com.venkad.androidtest.databinding.ActivityRegisterBinding
 import com.venkad.androidtest.ui.login.LoginViewModelFactory
 import com.venkad.androidtest.ui.login.LoginActivity
+import com.venkad.androidtest.ui.products.ProductsActivity
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -65,7 +66,7 @@ class RegisterActivity : AppCompatActivity(), KodeinAware, RegisterCallBack {
                     Toast.makeText(this, "Password mismatch", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    registerViewModel.register()
+                    registerViewModel.register(activityRegisterBinding.emailInputLayout.editText?.text.toString(),  activityRegisterBinding.passwordInputLayout.editText?.text.toString())
                 }
             }
         }
@@ -76,15 +77,18 @@ class RegisterActivity : AppCompatActivity(), KodeinAware, RegisterCallBack {
         !TextUtils.isEmpty(this) && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
     override fun onStarted() {
-        TODO("Not yet implemented")
+        Toast.makeText(this, "loading...", Toast.LENGTH_SHORT).show()
     }
 
     override fun onSuccess(message: String) {
-        TODO("Not yet implemented")
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, ProductsActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     override fun onError(message: String) {
-        TODO("Not yet implemented")
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
 

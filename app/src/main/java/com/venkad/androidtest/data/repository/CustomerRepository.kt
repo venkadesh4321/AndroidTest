@@ -16,7 +16,7 @@ class CustomerRepository(
         val response = MutableLiveData<RegisterResponse>()
 
         val jsonObject = JsonObject()
-        jsonObject.addProperty("email_id", emailId)
+        jsonObject.addProperty("email", emailId)
         jsonObject.addProperty("password", password)
 
         try {

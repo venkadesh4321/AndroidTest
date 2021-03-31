@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import com.venkad.androidtest.data.network.Coroutines
 import com.venkad.androidtest.data.repository.CustomerRepository
 import com.venkad.androidtest.ui.login.LoginCallBack
+import com.venkad.androidtest.util.Constants
 import com.venkad.androidtest.util.NoInternetException
+import khangtran.preferenceshelper.PrefHelper
 
 class RegisterViewModel(
     private val customerRepository: CustomerRepository
@@ -15,13 +17,14 @@ class RegisterViewModel(
     var emailId: MutableLiveData<String> = MutableLiveData()
     var password: MutableLiveData<String> = MutableLiveData()
 
-    fun register() {
+    fun register(emailId: String, password: String) {
         registerCallBack?.onStarted()
         try {
             Coroutines.main {
-                val response = customerRepository.register(emailId.value!!, password.value!!)
+                val response = customerRepository.register(emailId, password)
 
                 if (response.value != null) {
+                    PrefHelper.setVal(Constants.KEY_TOKEN, response.value!!.data.token)
                     registerCallBack?.onSuccess("success")
                 }
             }
