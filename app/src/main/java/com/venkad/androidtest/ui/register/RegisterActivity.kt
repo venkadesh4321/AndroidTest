@@ -39,6 +39,7 @@ class RegisterActivity : AppCompatActivity(), KodeinAware, RegisterCallBack {
 
     private fun initViewModel() {
         registerViewModel = ViewModelProvider(this, registerViewModelFactory).get(RegisterViewModel::class.java)
+        activityRegisterBinding.registerViewModel = registerViewModel
         registerViewModel.registerCallBack = this
     }
 
@@ -66,7 +67,7 @@ class RegisterActivity : AppCompatActivity(), KodeinAware, RegisterCallBack {
                     Toast.makeText(this, "Password mismatch", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    registerViewModel.register(activityRegisterBinding.emailInputLayout.editText?.text.toString(),  activityRegisterBinding.passwordInputLayout.editText?.text.toString())
+                    registerViewModel.register()
                 }
             }
         }

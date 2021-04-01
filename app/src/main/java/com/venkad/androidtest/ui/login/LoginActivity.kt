@@ -53,6 +53,7 @@ class LoginActivity : AppCompatActivity(), KodeinAware, LoginCallBack {
 
     private fun initViewModel() {
         loginViewModel = ViewModelProvider(this, loginViewModelFactory).get(LoginViewModel::class.java)
+        activityLoginBinding.loginViewModel = loginViewModel
         loginViewModel.loginCallBack = this
     }
 
@@ -75,7 +76,7 @@ class LoginActivity : AppCompatActivity(), KodeinAware, LoginCallBack {
                     Toast.makeText(this, "Enter your password", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    loginViewModel.login(activityLoginBinding.emailInputLayout.editText?.text.toString(), activityLoginBinding.passwordInputLayout.editText?.text.toString())
+                    loginViewModel.login()
                 }
             }
         }

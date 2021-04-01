@@ -17,14 +17,15 @@ class LoginViewModel(
     var emailId: MutableLiveData<String> = MutableLiveData()
     var password: MutableLiveData<String> = MutableLiveData()
 
-    fun login(emailId: String, password: String) {
+    fun login() {
         loginCallBack?.onStarted()
         try {
             Coroutines.main {
-                val response = customerRepository.login(emailId, password)
+                val response = customerRepository.login(emailId.value!!, password.value!!)
 
                 if (response.value != null) {
                     PrefHelper.setVal(Constants.KEY_TOKEN, response.value!!.data.token)
+                    PrefHelper.setVal(Constants.KEY_SHOP_ID, response.value!!.data.shop_id)
                     loginCallBack?.onSuccess(response.value!!.message)
                 } else {
                     loginCallBack?.onError("Login failed")

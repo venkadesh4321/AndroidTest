@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.venkad.androidtest.R
 import com.venkad.androidtest.data.network.model.Products
 import com.venkad.androidtest.databinding.ItemProductBinding
@@ -29,8 +28,11 @@ class ProductAdapter(
     override fun onBindViewHolder(holder: ProductViewsHolder, position: Int) {
         holder.itemProductBinding.product = details[position]
 
-        holder.itemProductBinding.priceTextView.text = "Actual Price: "+details[position].price
-        holder.itemProductBinding.sellPriceTextView.text = "Sell Price: "+details[position].sell_price
+        holder.itemProductBinding.priceTextView.text = "Actual Price: " + details[position].price
+        holder.itemProductBinding.sellPriceTextView.text =
+            "Sell Price: " + details[position].sell_price
+        holder.itemProductBinding.sellPriceWithVatTextView.text =
+            "Sell Price with vat: " + details[position].sell_price_with_vat
     }
 
     inner class ProductViewsHolder(

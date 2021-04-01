@@ -17,13 +17,11 @@ class ProductRepository(
     private val productApi: ProductApi
 ) : SafeApiRequest() {
 
-    suspend fun getProducts(): LiveData<Product> {
+    suspend fun getProducts(token: String, shopId: Int): MutableLiveData<Product> {
         val response = MutableLiveData<Product>()
 
-        val token = PrefHelper.getStringVal(Constants.KEY_TOKEN)
-        Log.e("sss", "Bearer $token" )
         try {
-            response.value = apiRequest { productApi.getProducts(46, "Android 10", 9, "Bearer $token") }
+            response.value = apiRequest { productApi.getProducts(shopId, "Android 10", 9, token) }
         } catch (e: Exception) {
             response.value = null
         }

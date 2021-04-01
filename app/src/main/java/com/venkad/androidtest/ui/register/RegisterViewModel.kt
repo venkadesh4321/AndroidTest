@@ -17,15 +17,17 @@ class RegisterViewModel(
     var emailId: MutableLiveData<String> = MutableLiveData()
     var password: MutableLiveData<String> = MutableLiveData()
 
-    fun register(emailId: String, password: String) {
+    fun register() {
         registerCallBack?.onStarted()
         try {
             Coroutines.main {
-                val response = customerRepository.register(emailId, password)
+                val response = customerRepository.register(emailId.value!!, password.value!!)
 
                 if (response.value != null) {
                     PrefHelper.setVal(Constants.KEY_TOKEN, response.value!!.data.token)
                     registerCallBack?.onSuccess("success")
+                } else {
+                    registerCallBack?.onError("Registration failed")
                 }
             }
         } catch (e: NoInternetException) {
